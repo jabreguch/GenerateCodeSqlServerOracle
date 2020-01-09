@@ -1,0 +1,61 @@
+@model BeTRF_TIPO
+@{ Layout = null;}
+<form class='form form-horizontal form-bordered' id ='frmTrftipo' >
+<div class='form-body'>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='TXVALOR' >Valor</label><div class="col-md-9">
+@Html.text(x => x.TXVALOR, new { @class = "form-control", @maxlength = "150" }, null, false, true)
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='TXSIGLA' >Sigla</label><div class="col-md-9">
+@Html.text(x => x.TXSIGLA, new { @class = "form-control", @maxlength = "5" }, null, false, true)
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='TXDESCRIPCION' >Descripcion</label><div class="col-md-9">
+@Html.text(x => x.TXDESCRIPCION, new { @class = "form-control", @maxlength = "150" }, null, false, true)
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='IDTIPOREF' >Tiporef</label><div class="col-md-9">
+@Html.number(x => x.IDTIPOREF, new { @class = "form-control" }, null, false, true)
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='NUORDEN' >Orden</label><div class="col-md-9">
+@Html.number(x => x.NUORDEN, new { @class = "form-control" }, null, false, true)
+</div>
+</div>
+@Html.hidden(x => x.IDGRUPO)
+@Html.hidden(x => x.IDTIPO)
+@Html.hidden(x => x.TXTIPO)
+</div>
+@Html.hidden(x => x.CoEstadoPagina)
+</form>
+<script type="text/javascript">
+$(function () {
+$('#frmTrftipo').validate(DefaultOptionValidate);
+$('#WinComun button[id=btnGraba]').unbind('click').on('click', GrabaTrftipo);
+ });
+
+GrabaTrftipo = function () {
+if ($('#frmTrftipo').valid()) {
+var data = FormToJson(document.getElementById('frmTrftipo'));
+$.ajax({
+url: '@Url.Action("Graba","api/TrftipoApi", new { area= "Maestros" })',
+dataType: 'json',
+type: 'POST',
+cache: false,
+data: data,
+success: function (d) {
+if (d.success == true) {
+var item = d.data;
+GetTrftipo.call({ 'codigo': item });
+GetsTrftipo();
+}
+}
+ });
+}
+}
+</script>

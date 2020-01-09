@@ -1,0 +1,117 @@
+CREATE PROCEDURE Condominio.ApartamentoinquilinoAdd(
+@CoCondominio  INT OUTPUT ,
+@CoEdificio  INT OUTPUT ,
+@CoApartamento  INT OUTPUT ,
+@CoInquilino  INT OUTPUT ,
+@FeIniContrato CHAR(8),
+@FeFinContrato CHAR(8),
+@FeContrato CHAR(8),
+@BlContrato VARBINARY OUTPUT ,
+@NoArchivo VARCHAR(250),
+@NoArchivoExtencion VARCHAR(5),
+@CoUsuCre INT) AS
+
+INSERT INTO Condominio.TblApartamentoInquilino (
+CoCondominio,
+CoEdificio,
+CoApartamento,
+CoInquilino,
+FeIniContrato,
+FeFinContrato,
+FeContrato,
+BlContrato,
+NoArchivo,
+NoArchivoExtencion,
+CoUsuCre)
+VALUES (@CoCondominio,
+@CoEdificio,
+@CoApartamento,
+@CoInquilino,
+@FeIniContrato,
+@FeFinContrato,
+@FeContrato,
+@BlContrato,
+@NoArchivo,
+@NoArchivoExtencion,
+@CoUsuCre) 
+
+GO
+CREATE PROCEDURE Condominio.ApartamentoinquilinoEdit(
+@CoCondominio INT OUTPUT ,
+@CoEdificio INT OUTPUT ,
+@CoApartamento INT OUTPUT ,
+@CoInquilino INT OUTPUT ,
+@FeIniContrato CHAR(8),
+@FeFinContrato CHAR(8),
+@FeContrato CHAR(8),
+@BlContrato VARBINARY OUTPUT ,
+@NoArchivo VARCHAR(250),
+@NoArchivoExtencion VARCHAR(5),
+@CoUsuMod INT) AS
+
+UPDATE Condominio.TblApartamentoInquilino
+SET FeIniContrato=@FeIniContrato,
+FeFinContrato=@FeFinContrato,
+FeContrato=@FeContrato,
+BlContrato=@BlContrato,
+NoArchivo=@NoArchivo,
+NoArchivoExtencion=@NoArchivoExtencion,
+CoUsuMod= @CoUsuMod,FeMod= getdate()
+WHERE CoCondominio= @CoCondominio  And CoEdificio= @CoEdificio  And CoApartamento= @CoApartamento  And CoInquilino= @CoInquilino 
+
+GO
+CREATE PROCEDURE Condominio.ApartamentoinquilinoDel(
+@CoCondominio  INT OUTPUT ,@CoEdificio  INT OUTPUT ,@CoApartamento  INT OUTPUT ,@CoInquilino  INT OUTPUT ,
+@CoUsuEli INT) AS
+
+UPDATE Condominio.TblApartamentoInquilino
+SET FlSitReg='I',
+CoUsuEli = @CoUsuEli,
+FeEli= getdate()
+WHERE CoCondominio= @CoCondominio  And CoEdificio= @CoEdificio  And CoApartamento= @CoApartamento  And CoInquilino= @CoInquilino 
+
+GO
+CREATE PROCEDURE Condominio.ApartamentoinquilinoEditEst(
+@CoCondominio  INT OUTPUT ,@CoEdificio  INT OUTPUT ,@CoApartamento  INT OUTPUT ,@CoInquilino  INT OUTPUT ,
+@CoEstReg INT,
+@CoUsuMod INT) AS
+
+UPDATE Condominio.TblApartamentoInquilino
+SET CoEstReg = @CoEstReg,
+CoUsuMod= @CoUsuMod,
+FeMod= getdate()
+WHERE CoCondominio= @CoCondominio  And CoEdificio= @CoEdificio  And CoApartamento= @CoApartamento  And CoInquilino= @CoInquilino 
+
+GO
+CREATE PROCEDURE Condominio.ApartamentoinquilinoGets AS
+
+SELECT CoCondominio,
+CoEdificio,
+CoApartamento,
+CoInquilino,
+TblApartamentoInquilino.FeIniContrato,
+TblApartamentoInquilino.FeFinContrato,
+TblApartamentoInquilino.FeContrato,
+TblApartamentoInquilino.BlContrato,
+TblApartamentoInquilino.NoArchivo,
+TblApartamentoInquilino.NoArchivoExtencion,
+TblApartamentoInquilino.CoEstReg, TblApartamentoInquilino.CoUsuEli, TblApartamentoInquilino.CoUsuMod, TblApartamentoInquilino.CoUsuCre, TblApartamentoInquilino.FeCre, TblApartamentoInquilino.FeEli, TblApartamentoInquilino.FeMod, TblApartamentoInquilino.FlSitReg
+FROM  Condominio.TblApartamentoInquilino
+WHERE TblApartamentoInquilino.FlSitReg ='A'
+
+GO
+CREATE PROCEDURE Condominio.ApartamentoinquilinoGet @CoCondominio  INT OUTPUT ,@CoEdificio  INT OUTPUT ,@CoApartamento  INT OUTPUT ,@CoInquilino  INT OUTPUT  AS
+
+SELECT CoCondominio,
+CoEdificio,
+CoApartamento,
+CoInquilino,
+TblApartamentoInquilino.FeIniContrato,
+TblApartamentoInquilino.FeFinContrato,
+TblApartamentoInquilino.FeContrato,
+TblApartamentoInquilino.BlContrato,
+TblApartamentoInquilino.NoArchivo,
+TblApartamentoInquilino.NoArchivoExtencion,
+TblApartamentoInquilino.CoEstReg, TblApartamentoInquilino.CoUsuEli, TblApartamentoInquilino.CoUsuMod, TblApartamentoInquilino.CoUsuCre, TblApartamentoInquilino.FeCre, TblApartamentoInquilino.FeEli, TblApartamentoInquilino.FeMod, TblApartamentoInquilino.FlSitReg
+FROM  Condominio.TblApartamentoInquilino
+WHERE CoCondominio= @CoCondominio  And CoEdificio= @CoEdificio  And CoApartamento= @CoApartamento  And CoInquilino= @CoInquilino 

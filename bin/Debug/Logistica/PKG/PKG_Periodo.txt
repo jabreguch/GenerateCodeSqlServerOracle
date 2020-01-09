@@ -1,0 +1,78 @@
+CREATE PROCEDURE Condominio.PeriodoAdd(
+@CoPeriodo  INT OUTPUT ,
+@CoCondominio INT OUTPUT ,
+@CoEdificio INT OUTPUT ,
+@FePeriodo CHAR(8),
+@CoUsuCre INT) AS
+
+INSERT INTO Condominio.TblPeriodo (
+CoPeriodo,
+CoCondominio,
+CoEdificio,
+FePeriodo,
+CoUsuCre)
+VALUES (@CoPeriodo,
+@CoCondominio,
+@CoEdificio,
+@FePeriodo,
+@CoUsuCre) 
+
+GO
+CREATE PROCEDURE Condominio.PeriodoEdit(
+@CoPeriodo INT OUTPUT ,
+@CoCondominio INT OUTPUT ,
+@CoEdificio INT OUTPUT ,
+@FePeriodo CHAR(8),
+@CoUsuMod INT) AS
+
+UPDATE Condominio.TblPeriodo
+SET CoCondominio=@CoCondominio,
+CoEdificio=@CoEdificio,
+FePeriodo=@FePeriodo,
+CoUsuMod= @CoUsuMod,FeMod= getdate()
+WHERE CoPeriodo= @CoPeriodo 
+
+GO
+CREATE PROCEDURE Condominio.PeriodoDel(
+@CoPeriodo  INT OUTPUT ,
+@CoUsuEli INT) AS
+
+UPDATE Condominio.TblPeriodo
+SET FlSitReg='I',
+CoUsuEli = @CoUsuEli,
+FeEli= getdate()
+WHERE CoPeriodo= @CoPeriodo 
+
+GO
+CREATE PROCEDURE Condominio.PeriodoEditEst(
+@CoPeriodo  INT OUTPUT ,
+@CoEstReg INT,
+@CoUsuMod INT) AS
+
+UPDATE Condominio.TblPeriodo
+SET CoEstReg = @CoEstReg,
+CoUsuMod= @CoUsuMod,
+FeMod= getdate()
+WHERE CoPeriodo= @CoPeriodo 
+
+GO
+CREATE PROCEDURE Condominio.PeriodoGets AS
+
+SELECT CoPeriodo,
+TblPeriodo.CoCondominio,
+TblPeriodo.CoEdificio,
+TblPeriodo.FePeriodo,
+TblPeriodo.CoEstReg, TblPeriodo.CoUsuEli, TblPeriodo.CoUsuMod, TblPeriodo.CoUsuCre, TblPeriodo.FeCre, TblPeriodo.FeEli, TblPeriodo.FeMod, TblPeriodo.FlSitReg
+FROM  Condominio.TblPeriodo
+WHERE TblPeriodo.FlSitReg ='A'
+
+GO
+CREATE PROCEDURE Condominio.PeriodoGet @CoPeriodo  INT OUTPUT  AS
+
+SELECT CoPeriodo,
+TblPeriodo.CoCondominio,
+TblPeriodo.CoEdificio,
+TblPeriodo.FePeriodo,
+TblPeriodo.CoEstReg, TblPeriodo.CoUsuEli, TblPeriodo.CoUsuMod, TblPeriodo.CoUsuCre, TblPeriodo.FeCre, TblPeriodo.FeEli, TblPeriodo.FeMod, TblPeriodo.FlSitReg
+FROM  Condominio.TblPeriodo
+WHERE CoPeriodo= @CoPeriodo 

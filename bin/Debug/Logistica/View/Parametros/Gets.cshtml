@@ -1,0 +1,46 @@
+@model IEnumerable<BeParametros>
+@{Layout = null;}
+@if (Model.Count() > 0)
+ {
+<div class='row'>
+<div class='col-md-12 col-sm-12'>
+<table id='tblParametros' class='table table-bordered mb-0'>
+<thead class='thead-default'>
+<tr>
+</tr>
+</thead>
+<tbody>
+@foreach (BeParametros item in Model) {
+<tr>
+<td>
+@item.CoParametro</td>
+<td>
+@item.CoEmpresa</td>
+<td>
+ <button type='button' title='Editar' class='btn btn-icon btn-pure success edita-parametros' data-target='#WinComun' data-codigo='{ "NoCampo": @item.NoCampo,  "CoEstadoPagina": "@Enu.CoEstadoPagina.Edicion"}'><i class='fa fa-pencil'></i></button></td>
+<td>
+<button type='button' data-codigo='{"NoCampo": @item.NoCampo, "CO_EST_REG": @(item.CO_EST_REG == 1 ? 0 : 1)  }' title=@(item.CO_EST_REG == 1 ? "¿Desactivar?": "¿Activar ?") class='btn btn-icon btn-pure success' data-toggle='activa-parametros' data-placement='top'>
+<i class='@(item.CO_EST_REG == 1 ? "fa fa-check" : "fa fa-thumbs-o-down")'></i>
+</button>
+</td>
+<td>
+<button type='button' data-codigo='{"NoCampo": @item.NoCampo}' title='¿Eliminar?' class='btn btn-icon btn-pure danger' data-toggle='elimina-parametros' data-placement='top'>
+<i class='fa fa-trash-o'></i>
+</button>
+</td>
+<td>
+@item.NuOrden</td>
+<td>
+@item.NoValor</td>
+<td>
+@item.NoNombre</td>
+<td>
+@item.NoSigla</td>
+</tr>
+}
+</tbody>
+</table>
+</div>
+</div>
+}
+@Glo.Paginador()

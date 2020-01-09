@@ -1,0 +1,108 @@
+@model BeParametros
+@{
+ViewBag.Title = "Titulo de la página";
+Layout = "~/Areas/Maestros/Views/Shared/_Layout.cshtml";
+}
+
+<div class='content-header row'>
+<div class='content-header-left col-md-6 col-12 mb-1' >
+<h3 class='content-header-title' > Titulo</h3>
+</div>
+<div class='content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-12' >
+<div class='breadcrumb-wrapper col-12' >
+<ol class='breadcrumb'>
+<li class='breadcrumb-item' >
+<a data-target='#WinComun' id='btnNuevoParametros' data-codigo='{"CoEstadoPagina": @Enu.CoEstadoPagina.Nuevo }'>Nuevo</a>
+</li>
+</ol>
+</div>
+ </div>
+</div>
+<section class='card' >
+<div class='card-header' >
+<h4 class='card-title' > Subtitulo</h4>
+<a class='heading-elements-toggle' ><i class='fa fa-ellipsis-v font-medium-3' ></i></a>
+<div class='heading-elements'>
+<ul class='list-inline mb-0'>
+<li><a data-action='expand'><i class=vft -maximize'></i></a></li>
+</ul>
+</div>
+</div>
+<div class='card-content' >
+<div class='card-body' >
+<form class='form form-horizontal' >
+<div class='form-body' >
+</div>
+<div id='divParametros' class='dataTables_wrapper dt-bootstrap4 no-footer'>
+</div>
+</form>
+</div>
+</div>
+</section>
+
+<script type="text/javascript">
+function GetsParametros(e, criterio) {
+var Filter = {};
+criterio = $.extend({}, criterio, Filter);
+$('#divParametros').empty();
+$.ajax({
+url: '@Url.Action("Gets", "Parametros", new { area= "Maestros" })',
+type: 'GET',
+cache: false,
+async: true,
+data: criterio,
+success: function (data) {
+$('#divParametros').html(data);
+},
+complete: function () {
+$('#tblParametros').tablaFuncional({ funcion: 'GetsParametros', data: criterio });
+$('[data-toggle="elimina-Parametros"]').confirmar({ funcion: 'ConfirmaEliminaParametros' });
+$('[data-toggle="activa-Parametros"]').confirmar({ funcion: 'ConfirmaActivaParametros' });
+$('.edita-Parametros').click(GetParametros);
+}
+});
+}
+$(function () {
+$('#btnNuevoParametros').click(GetParametros);
+GetsParametros();
+});
+
+GetParametros = function () {
+var codigo = this.codigo;
+if (codigo == null || codigo == undefined) { codigo = $(this).data('codigo'); }
+$.ajax({
+url: '@Url.Action("Get", "Parametros", new { area = "Maestros" } )',
+type: 'Get',
+cache: false,
+data: codigo,
+success: function (data) {
+DefaultModal(data, { Titulo: 'Titulo'});
+} 
+});
+}
+
+ function ConfirmaEliminaParametros(codigo) {
+$.ajax({
+url: '@Url.Action("Del", "api/ParametrosApi", new { area= "Maestros" })',
+dataType: 'json',
+type: 'POST',
+cache: false,
+data: codigo,
+success: function (d) {
+GetsParametros();
+},
+});
+ }
+function ConfirmaActivaParametros(codigo) {
+$.ajax({
+url: '@Url.Action("EditEstReg", "api/ ParametrosApi", new { area= "Maestros"})',
+dataType: 'json',
+type: 'POST',
+cache: false,
+data: codigo,
+success: function (d) {
+GetsParametros();
+},
+});
+}
+</script>

@@ -1,0 +1,85 @@
+CREATE PROCEDURE Condominio.ServiciocalculoAdd(
+@CoServicioCalculo  INT OUTPUT ,
+@CoEmpresa INT OUTPUT ,
+@CoServicio INT OUTPUT ,
+@CoTipoPredio INT OUTPUT ,
+@CoTipoCalculo INT OUTPUT ,
+@CoUsuCre INT) AS
+
+INSERT INTO Condominio.TrfServicioCalculo (
+CoServicioCalculo,
+CoEmpresa,
+CoServicio,
+CoTipoPredio,
+CoTipoCalculo,
+CoUsuCre)
+VALUES (@CoServicioCalculo,
+@CoEmpresa,
+@CoServicio,
+@CoTipoPredio,
+@CoTipoCalculo,
+@CoUsuCre) 
+
+GO
+CREATE PROCEDURE Condominio.ServiciocalculoEdit(
+@CoServicioCalculo INT OUTPUT ,
+@CoEmpresa INT OUTPUT ,
+@CoServicio INT OUTPUT ,
+@CoTipoPredio INT OUTPUT ,
+@CoTipoCalculo INT OUTPUT ,
+@CoUsuMod INT) AS
+
+UPDATE Condominio.TrfServicioCalculo
+SET CoEmpresa=@CoEmpresa,
+CoServicio=@CoServicio,
+CoTipoPredio=@CoTipoPredio,
+CoTipoCalculo=@CoTipoCalculo,
+CoUsuMod= @CoUsuMod,FeMod= getdate()
+WHERE CoServicioCalculo= @CoServicioCalculo 
+
+GO
+CREATE PROCEDURE Condominio.ServiciocalculoDel(
+@CoServicioCalculo  INT OUTPUT ,
+@CoUsuEli INT) AS
+
+UPDATE Condominio.TrfServicioCalculo
+SET FlSitReg='I',
+CoUsuEli = @CoUsuEli,
+FeEli= getdate()
+WHERE CoServicioCalculo= @CoServicioCalculo 
+
+GO
+CREATE PROCEDURE Condominio.ServiciocalculoEditEst(
+@CoServicioCalculo  INT OUTPUT ,
+@CoEstReg INT,
+@CoUsuMod INT) AS
+
+UPDATE Condominio.TrfServicioCalculo
+SET CoEstReg = @CoEstReg,
+CoUsuMod= @CoUsuMod,
+FeMod= getdate()
+WHERE CoServicioCalculo= @CoServicioCalculo 
+
+GO
+CREATE PROCEDURE Condominio.ServiciocalculoGets AS
+
+SELECT CoServicioCalculo,
+TrfServicioCalculo.CoEmpresa,
+TrfServicioCalculo.CoServicio,
+TrfServicioCalculo.CoTipoPredio,
+TrfServicioCalculo.CoTipoCalculo,
+TrfServicioCalculo.CoEstReg, TrfServicioCalculo.CoUsuEli, TrfServicioCalculo.CoUsuMod, TrfServicioCalculo.CoUsuCre, TrfServicioCalculo.FeCre, TrfServicioCalculo.FeEli, TrfServicioCalculo.FeMod, TrfServicioCalculo.FlSitReg
+FROM  Condominio.TrfServicioCalculo
+WHERE TrfServicioCalculo.FlSitReg ='A'
+
+GO
+CREATE PROCEDURE Condominio.ServiciocalculoGet @CoServicioCalculo  INT OUTPUT  AS
+
+SELECT CoServicioCalculo,
+TrfServicioCalculo.CoEmpresa,
+TrfServicioCalculo.CoServicio,
+TrfServicioCalculo.CoTipoPredio,
+TrfServicioCalculo.CoTipoCalculo,
+TrfServicioCalculo.CoEstReg, TrfServicioCalculo.CoUsuEli, TrfServicioCalculo.CoUsuMod, TrfServicioCalculo.CoUsuCre, TrfServicioCalculo.FeCre, TrfServicioCalculo.FeEli, TrfServicioCalculo.FeMod, TrfServicioCalculo.FlSitReg
+FROM  Condominio.TrfServicioCalculo
+WHERE CoServicioCalculo= @CoServicioCalculo 

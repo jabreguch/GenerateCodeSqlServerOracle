@@ -1,0 +1,68 @@
+@model IEnumerable<BeTRF_TIPO>
+@{Layout = null;}
+@if (Model.Count() > 0)
+ {
+<div class='row'>
+<div class='col-md-12 col-sm-12'>
+<table id='tblTrftipo' class='table table-bordered mb-0'>
+<thead class='thead-default'>
+<tr>
+</tr>
+</thead>
+<tbody>
+@foreach (BeTRF_TIPO item in Model) {
+<tr>
+<td>
+@item.TXVALOR</td>
+<td>
+@item.TXSIGLA</td>
+<td>
+@item.TXDESCRIPCION</td>
+<td>
+@item.IDTIPOREF</td>
+<td>
+@item.NUORDEN</td>
+<td>
+ <button type='button' title='Editar' class='btn btn-icon btn-pure success edita-trftipo' data-target='#WinComun' data-codigo='{ "IDGRUPO": @item.IDGRUPO,  "CoEstadoPagina": "@Enu.CoEstadoPagina.Edicion"}'><i class='fa fa-pencil'></i></button></td>
+<td>
+<button type='button' data-codigo='{"IDGRUPO": @item.IDGRUPO, "CO_EST_REG": @(item.CO_EST_REG == 1 ? 0 : 1)  }' title=@(item.CO_EST_REG == 1 ? "¿Desactivar?": "¿Activar ?") class='btn btn-icon btn-pure success' data-toggle='activa-trftipo' data-placement='top'>
+<i class='@(item.CO_EST_REG == 1 ? "fa fa-check" : "fa fa-thumbs-o-down")'></i>
+</button>
+</td>
+<td>
+<button type='button' data-codigo='{"IDGRUPO": @item.IDGRUPO}' title='¿Eliminar?' class='btn btn-icon btn-pure danger' data-toggle='elimina-trftipo' data-placement='top'>
+<i class='fa fa-trash-o'></i>
+</button>
+</td>
+<td>
+ <button type='button' title='Editar' class='btn btn-icon btn-pure success edita-trftipo' data-target='#WinComun' data-codigo='{ "IDTIPO": @item.IDTIPO,  "CoEstadoPagina": "@Enu.CoEstadoPagina.Edicion"}'><i class='fa fa-pencil'></i></button></td>
+<td>
+<button type='button' data-codigo='{"IDTIPO": @item.IDTIPO, "CO_EST_REG": @(item.CO_EST_REG == 1 ? 0 : 1)  }' title=@(item.CO_EST_REG == 1 ? "¿Desactivar?": "¿Activar ?") class='btn btn-icon btn-pure success' data-toggle='activa-trftipo' data-placement='top'>
+<i class='@(item.CO_EST_REG == 1 ? "fa fa-check" : "fa fa-thumbs-o-down")'></i>
+</button>
+</td>
+<td>
+<button type='button' data-codigo='{"IDTIPO": @item.IDTIPO}' title='¿Eliminar?' class='btn btn-icon btn-pure danger' data-toggle='elimina-trftipo' data-placement='top'>
+<i class='fa fa-trash-o'></i>
+</button>
+</td>
+<td>
+ <button type='button' title='Editar' class='btn btn-icon btn-pure success edita-trftipo' data-target='#WinComun' data-codigo='{ "TXTIPO": @item.TXTIPO,  "CoEstadoPagina": "@Enu.CoEstadoPagina.Edicion"}'><i class='fa fa-pencil'></i></button></td>
+<td>
+<button type='button' data-codigo='{"TXTIPO": @item.TXTIPO, "CO_EST_REG": @(item.CO_EST_REG == 1 ? 0 : 1)  }' title=@(item.CO_EST_REG == 1 ? "¿Desactivar?": "¿Activar ?") class='btn btn-icon btn-pure success' data-toggle='activa-trftipo' data-placement='top'>
+<i class='@(item.CO_EST_REG == 1 ? "fa fa-check" : "fa fa-thumbs-o-down")'></i>
+</button>
+</td>
+<td>
+<button type='button' data-codigo='{"TXTIPO": @item.TXTIPO}' title='¿Eliminar?' class='btn btn-icon btn-pure danger' data-toggle='elimina-trftipo' data-placement='top'>
+<i class='fa fa-trash-o'></i>
+</button>
+</td>
+</tr>
+}
+</tbody>
+</table>
+</div>
+</div>
+}
+@Glo.Paginador()

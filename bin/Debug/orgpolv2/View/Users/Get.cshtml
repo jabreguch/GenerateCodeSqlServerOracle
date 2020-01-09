@@ -1,0 +1,101 @@
+@model Be_USERS
+@{ Layout = null;}
+<form class='form form-horizontal form-bordered' id ='frmUsers' >
+<div class='form-body'>
+
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='CUENTA' >Enta</label><div class="col-md-9">
+@Html.text(x => x.CUENTA, new { @class = "form-control", @maxlength = "50" }, null, false, true)
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='COD_OP' >D_op</label><div class="col-md-9">
+@Html.number(x => x.COD_OP, new { @class = "form-control" }, null, false, true)
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='X_USER_OLD_COUSUMOD' >User_old_cousumod</label><div class="col-md-9">
+@Html.text(x => x.X_USER_OLD_COUSUMOD, new { @class = "form-control", @maxlength = "50" }, null, false, true)
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='FEC_VEN_CTA' >C_ven_cta</label><div class="col-md-9">
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='USERNAME' >Ername</label><div class="col-md-9">
+@Html.text(x => x.USERNAME, new { @class = "form-control", @maxlength = "100" }, null, false, true)
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='IDUSERSDGU' >Usersdgu</label><div class="col-md-9">
+@Html.number(x => x.IDUSERSDGU, new { @class = "form-control" }, null, false, true)
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='CLAVE' >Ave</label><div class="col-md-9">
+@Html.text(x => x.CLAVE, new { @class = "form-control", @maxlength = "50" }, null, false, true)
+</div>
+</div>
+@Html.hidden(x => x.IDUSERSROP)
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='COD_ENTE' >D_ente</label><div class="col-md-9">
+@Html.text(x => x.COD_ENTE, new { @class = "form-control", @maxlength = "4" }, null, false, true)
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='FEC_VEN_PSW' >C_ven_psw</label><div class="col-md-9">
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='AMBITO' >Bito</label><div class="col-md-9">
+@Html.text(x => x.AMBITO, new { @class = "form-control", @maxlength = "6" }, null, false, true)
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='COPERFIL' >Perfil</label><div class="col-md-9">
+@Html.number(x => x.COPERFIL, new { @class = "form-control" }, null, false, true)
+</div>
+</div>
+<div class='form-group row'>
+<label class='col-md-3 label-control'  for='COD_AREA' >D_area</label><div class="col-md-9">
+@Html.text(x => x.COD_AREA, new { @class = "form-control", @maxlength = "4" }, null, false, true)
+</div>
+
+
+
+
+
+</div>
+
+
+
+</div>
+@Html.hidden(x => x.CoEstadoPagina)
+</form>
+<script type="text/javascript">
+$(function () {
+$('#frmUsers').validate(DefaultOptionValidate);
+$('#WinComun button[id=btnGraba]').unbind('click').on('click', GrabaUsers);
+ });
+
+GrabaUsers = function () {
+if ($('#frmUsers').valid()) {
+var data = FormToJson(document.getElementById('frmUsers'));
+$.ajax({
+url: '@Url.Action("Graba","api/UsersApi", new { area= "Seguridad" })',
+dataType: 'json',
+type: 'POST',
+cache: false,
+data: data,
+success: function (d) {
+if (d.success == true) {
+var item = d.data;
+GetUsers.call({ 'codigo': item });
+GetsUsers();
+}
+}
+ });
+}
+}
+</script>
